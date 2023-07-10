@@ -22,6 +22,9 @@ export class User {
   @Column()
   username: string
 
+  @Column()
+  cpf: string
+
   @Column({
     type: 'enum',
     enum: Job,
@@ -49,6 +52,12 @@ export class User {
 
   @Column({ nullable: true })
   deletedAt?: Date
+
+  @Column({
+    type: 'boolean',
+    default: true
+  })
+  temporarypassword: boolean
 
   @Column({
     type: 'boolean',

@@ -8,7 +8,7 @@ import { badRequest, HttpResponse, ok, serverError } from '../helpers'
 import { BadRequestError } from '../errors'
 
 type HttpRequest = {
-  username: string
+  identifier: string
   password: string
 }
 
@@ -21,6 +21,8 @@ type Model =
       name: string
       role: string
       job: string
+      cpf: string
+      id?: string
     }
 
 export class AuthenticationUserController extends Controller {

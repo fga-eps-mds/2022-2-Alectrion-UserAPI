@@ -15,6 +15,8 @@ const mockedUser: User = {
 
   username: datatype.string(),
 
+  cpf: datatype.string(),
+
   job: Job.DELEGADO,
 
   role: Role.ADMIN,
@@ -23,7 +25,9 @@ const mockedUser: User = {
 
   createdAt: new Date(),
 
-  updatedAt: new Date()
+  updatedAt: new Date(),
+
+  temporarypassword: false
 }
 
 const repositoryMocked = mock<Repository>()
@@ -52,6 +56,15 @@ describe('Should test user use case to get user', () => {
       userId: mockedUser.id
     }
     repositoryMocked.findOne.mockResolvedValue(mockedUser)
+    const result = await getUserUseCase.execute(mockedData)
+    expect(result).toEqual({ isSuccess: true, data: [mockedUser] })
+  })
+
+  it('should return all users with success when passing allUsers', async () => {
+    const mockedData = {
+      allUsers: true
+    }
+    repositoryMocked.findAll.mockResolvedValue(mockedUser)
     const result = await getUserUseCase.execute(mockedData)
     expect(result).toEqual({ isSuccess: true, data: [mockedUser] })
   })

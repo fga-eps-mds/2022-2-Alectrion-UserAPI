@@ -23,6 +23,8 @@ const mockedUser: User = {
 
   username: datatype.string(),
 
+  cpf: datatype.string(),
+
   job: Job.DELEGADO,
 
   role: Role.ADMIN,
@@ -31,7 +33,9 @@ const mockedUser: User = {
 
   createdAt: new Date(),
 
-  updatedAt: new Date()
+  updatedAt: new Date(),
+
+  temporarypassword: false
 }
 
 describe('Should test conditions for soft delete', () => {

@@ -12,6 +12,8 @@ export type User = {
 
   username: string
 
+  cpf: string
+
   job: Job
 
   role: Role
@@ -23,6 +25,8 @@ export type User = {
   updatedAt?: Date
 
   deletedAt?: Date
+
+  temporarypassword: boolean
 
   isDeleted?: boolean
 }

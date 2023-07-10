@@ -12,8 +12,21 @@ class UserRepository implements Repository {
 
   async findToAuthenticate(userInput: string): Promise<User> {
     const userPassword = await this.userRepository.find({
-      where: [{ username: userInput }, { email: userInput }], // Encontrando o usuário pelo nome ou email.
-      select: ['password', 'email', 'name', 'id', 'role', 'job'] // Retornando somente o que está entre as chaves.
+      where: [
+        { username: userInput },
+        { email: userInput },
+        { cpf: userInput }
+      ], // Encontrando o usuário pelo nome ou email ou cpf.
+      select: [
+        'password',
+        'email',
+        'name',
+        'id',
+        'role',
+        'job',
+        'cpf',
+        'temporarypassword'
+      ] // Retornando somente o que está entre as chaves.
     })
     return userPassword[0]
   }
@@ -72,25 +85,48 @@ class UserRepository implements Repository {
     return user
   }
 
+  async findOneByCpf(cpf: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOneBy({
+      cpf,
+      isDeleted: false
+    })
+    if (!user) {
+      return undefined
+    }
+    return user
+  }
+
   async createUser(params: {
     name: string
     email: string
     username: string
+    cpf: string
     job: Job
     role: Role
     password: string
+    temporaryPassword: boolean
   }): Promise<User | undefined> {
-    const { name, email, password, username, job, role } = params
+    const {
+      name,
+      email,
+      password,
+      username,
+      cpf,
+      job,
+      role,
+      temporaryPassword
+    } = params
 
     const user = this.userRepository.create({
       name,
       email: email !== '' ? email : undefined,
       password,
       username,
+      cpf,
       job: job ?? Job.GENERICO,
-      role: role ?? Role.BASICO
+      role: role ?? Role.BASICO,
+      temporarypassword: temporaryPassword
     })
-
     await this.userRepository.save(user)
     return user
   }

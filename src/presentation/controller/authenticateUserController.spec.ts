@@ -9,7 +9,7 @@ import { ServerError } from '../errors'
 
 describe('AuthenticateUserController', () => {
   const request: DataUserLogin = {
-    username: datatype.string(),
+    identifier: datatype.string(),
     password: datatype.string()
   }
 
@@ -27,7 +27,10 @@ describe('AuthenticateUserController', () => {
         email: datatype.string(),
         name: datatype.string(),
         role: datatype.string(),
-        job: datatype.string()
+        job: datatype.string(),
+        cpf: datatype.string(),
+        id: datatype.string(),
+        temporaryPassword: datatype.boolean()
       }
     }
     authenticateUserUseCaseMocked.execute.mockResolvedValue(useCaseReponseMock)
